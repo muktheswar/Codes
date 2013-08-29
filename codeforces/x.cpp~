@@ -1,0 +1,5 @@
+#include <stdio.h>
+int main(){
+double t=1000000;
+printf("%lf\n",t*t*t);
+}
