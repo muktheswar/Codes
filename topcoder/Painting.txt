@@ -1,0 +1,96 @@
+PROBLEM STATEMENT
+Normally Mr. Grey is not a painter, but he recently had an absolutely brilliant idea for a picture. He thinks that once drawn, it will bring him world-wide fame.
+
+The picture will be painted on an NxM sheet of white paper consisting of 1x1 squares. Its rows are numbered from 0 to N-1 and the columns are numbered from 0 to M-1. The cell in row i, column j is denoted as (i, j).
+
+Of course, Mr. Grey already has a picture plan in his mind. It is given in a vector <string> picture, which contains exactly N elements, where each element contains exactly M characters. Сharacter j in element i of picture will be 'B' if the cell (i, j) must be painted black, and it will be 'W' if this cell must be left white.
+
+Mr. Grey has a lot of black paint, but unfortunately he doesn't have a brush, so he went to a local shop to buy one. The shop offers square brushes of different sizes. More exactly, for each positive integer S, one can buy an SxS brush in the shop. Using an SxS brush, Mr. Grey will be able to paint entirely black SxS squares on the sheet of paper. In other words, he can choose row R and column C such that 0 <= R <= N - S, 0 <= C <= M - S, and then paint all cells (r, c) such that R <= r < R + S and C <= c < C + S in black paint. He can repeat this operation infinitely many times. If a cell must be black according to picture, it may be painted black several times. However, if a cell must be white, then it must never be painted black.
+
+It's easy to see that every picture can be drawn using a 1x1 brush, but it will be impossible to draw some pictures using larger brushes. Buying a 1x1 brush seems to be the most practical choice. However, Mr. Grey is sure that big masters must use big brushes. Therefore, he would like to buy the largest possible brush that will still allow him to draw the picture that he has in mind.
+
+Return the maximum value of S such that it's possible to draw picture using a brush of size SxS.
+
+DEFINITION
+Class:Painting
+Method:largestBrush
+Parameters:vector <string>
+Returns:int
+Method signature:int largestBrush(vector <string> picture)
+
+
+CONSTRAINTS
+-picture will contain between 1 and 50 elements, inclusive.
+-Each element of picture will contain between 1 and 50 characters, inclusive.
+-All elements of picture will contain the same number of characters.
+-Each character in picture will be 'B' or 'W'.
+-There will be at least one 'B' character in picture.
+
+
+EXAMPLES
+
+0)
+{"BBBB",
+ "BBBB",
+ "BBBB",
+ "BBBB"}
+
+Returns: 4
+
+It's easy to see that a solid 4x4 black square can be drawn using a 4x4 brush.
+
+1)
+{"BBBB",
+ "BWWB",
+ "BWWB",
+ "BBBB"}
+
+Returns: 1
+
+This time we have only a border of a 4x4 square and it's necessary to have a 1x1 brush in order to draw it.
+
+2)
+{"WBBBBB",
+ "BBBBBB",
+ "BBBBBB",
+ "BBBBBB"}
+
+
+Returns: 3
+
+A completely black 4x6 rectangle can be drawn using a 4x4 brush. However, if we want just one cell within it to remain white, the size of the brush will have to be reduced. In this example, a 3x3 brush would work.
+
+3)
+{"BBBB",
+ "BBBB",
+ "WBBB",
+ "BBBB",
+ "BBBB",
+ "BBBB"}
+
+
+Returns: 2
+
+This is very similar to the previous example, but the white cell is in a different location. Mr. Grey will have to buy a 2x2 brush in this case.
+
+4)
+{"WBBBBBWWWWWWWWW",
+ "WBBBBBBWWWWWWWW",
+ "WBBBBBBBBBBBWWW",
+ "WBBBBBBBBBBBWWW",
+ "BBBBBBBBBBBBBBB",
+ "BBBBBBBBBBBBBBB",
+ "BBBBBBBBBBBBBBB",
+ "BBBBBBBBWWBBBBB",
+ "BBBBBBBBWBBBBBB",
+ "WBBBBBBBWBBBBBW",
+ "BBBBBBBWWBBBBBW",
+ "BBBBBBBWWBBBBBW",
+ "BBBBBBWWWBBBBBW",
+ "BBBBBWWWWWWWWWW",
+ "BBBBBWWWWWWWWWW"}
+
+
+Returns: 5
+
+
