@@ -1,0 +1,101 @@
+#include <iostream>
+#include <cstdio>
+#include <fstream>
+#include <cstring>
+using namespace std;
+#define ll long long
+#define mod0 1000000007
+#define mod_1 1000000007
+#define mod_1X 1681
+#define mod_1Y 148721
+typedef struct mat {
+ll array[2][2];
+} matrix;
+matrix Identity;
+inline matrix check(matrix ans,ll mod)
+{
+if(ans.array[0][0]>=mod)ans.array[0][0]%=mod;
+if(ans.array[0][1]>=mod)ans.array[0][1]%=mod;
+if(ans.array[1][0]>=mod)ans.array[1][0]%=mod;
+if(ans.array[1][1]>=mod)ans.array[1][1]%=mod;
+return ans;
+}
+inline matrix mul(matrix& A,matrix& B,ll& mod)
+{
+matrix ans;
+//cout<<"hello";
+ans.array[0][0]=(A.array[0][0]*B.array[0][0])%mod+(A.array[0][1]*B.array[1][0])%mod;
+ans.array[1][0]=(A.array[0][0]*B.array[0][1])%mod+(A.array[0][1]*B.array[1][1])%mod;
+ans.array[0][1]=(A.array[1][0]*B.array[0][0])%mod+(A.array[1][1]*B.array[1][0])%mod;
+ans.array[1][1]=(A.array[1][0]*B.array[0][1])%mod+(A.array[1][1]*B.array[1][1])%mod;
+//return check(ans,mod);
+return ans;
+}
+inline void show(matrix mat){
+cout<<mat.array[0][0]<<"\t"<<mat.array[0][1]<<endl;
+cout<<mat.array[1][0]<<"\t"<<mat.array[1][1]<<endl;
+}
+
+inline matrix fast_pow(matrix obj,ll pow,ll mod)
+{
+if(pow==0)return Identity;
+if(pow==1)return obj;
+matrix side=fast_pow(obj,pow/2,mod);
+side=mul(side,side,mod);
+if(pow%2!=0) {
+side=mul(side,obj,mod);
+}
+//show(side);
+//cout<<endl;
+return side;
+}
+inline ll get_mod(char ar[],int siz,ll mod)
+{
+int i=0;
+ll remain=0;
+while(i<siz) {
+remain=remain*10+ar[i++]-'0';
+if(remain>=mod)remain%=mod;
+}
+return remain;
+}
+inline ll get_power(char ar[],int siz)
+{
+return get_mod(ar,siz,mod_1-1);
+}
+inline void precompute()
+{
+Identity.array[0][0]=Identity.array[1][1]=1;
+Identity.array[0][1]=Identity.array[1][0]=0;
+}
+inline matrix initialize(matrix& fibb)
+{
+fibb.array[0][0]=0;
+fibb.array[0][1]=fibb.array[1][0]=fibb.array[1][1]=1;
+return fibb;
+}
+int main()
+{
+int tst;
+precompute();
+// freopen("out.txt","r",stdin);
+// freopen("output__ac.txt","w",stdout);
+scanf("%d",&tst);
+//cin>>tst;
+while(tst--) {
+char ar[110];
+scanf("%s",ar);
+int siz=strlen(ar);
+matrix fibb;
+fibb=initialize(fibb);
+///show(fibb);
+ll power1=get_power(ar,siz);
+//cout<<power1><<endl;
+matrix inter=fast_pow(fibb,power1,mod_1);
+matrix obj=fast_pow(fibb,inter.array[0][1],mod0);
+// show(inter);
+printf("%lld\n",obj.array[0][1]);
+//cout<<<<endl;
+}
+return 0;
+}
